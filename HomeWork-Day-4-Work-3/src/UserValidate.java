@@ -1,5 +1,5 @@
 
-public class UserValidate extends Users {
+public class UserValidate {
 	
 	public boolean validOrNotValid(Users user) {
 		

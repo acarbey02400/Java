@@ -15,8 +15,8 @@ public class ProductManager {
 			_iLogerService.log();
 		}
 	}
-	public void campaingsOrder(Users user, Product product) {
-		_iCampaingsService.add();
+	public void campaingsOrder(Users user, Product product,Product campaignProduct) {
+		_iCampaingsService.add(campaignProduct);
 		order(user,product);
 	}
 }

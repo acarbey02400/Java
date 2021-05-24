@@ -1,14 +1,14 @@
 
 public class ComputerCampaingsManager implements ICampaingsService{
-
-	Product _product;
-	public ComputerCampaingsManager(Product product) {
-		_product=product;
-	}
-	@Override
-	public void add() {
+	
+	public ComputerCampaingsManager() {
 		
-		System.out.println("Bilgisayar alana Mouse hediye kampanyasýndan yararlandýnýz."+_product.getName()+" sepete eklendi.");
+	}
+
+	@Override
+	public void add(Product product) {
+		
+		System.out.println("Bilgisayar alana Mouse hediye kampanyasýndan yararlandýnýz."+product.getName()+" sepete eklendi.");
 	}
 
 	@Override

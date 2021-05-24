@@ -3,7 +3,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Gamer gamer = new Gamer();
+		 Gamer gamer = new Gamer();
 		 gamer.setFirstName("Ýbrahim");
 		 gamer.setLastName("Halil");
 		 gamer.setId(1);
@@ -37,8 +37,8 @@ public class Main {
 		 
 		 //////////////////////////////////////////////////////////////////////
 		 
-		 ProductManager productManager1 = new ProductManager(new FileLoggerManager(), new ComputerCampaingsManager(mouse));
-		 productManager1.campaingsOrder(gamer, computer);
+		 ProductManager productManager1 = new ProductManager(new FileLoggerManager(), new ComputerCampaingsManager());
+		 productManager1.campaingsOrder(gamer, computer,mouse);
 	}
 
 }
