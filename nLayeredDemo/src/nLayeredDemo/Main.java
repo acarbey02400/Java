@@ -6,6 +6,8 @@ import nLayeredDemo.core.JLoggerManagerAdapter;
 import nLayeredDemo.dataAccess.concretes.AbcProductDao;
 
 import nLayeredDemo.entities.concretes.Product;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
