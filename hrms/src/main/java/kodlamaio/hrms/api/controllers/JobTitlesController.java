@@ -27,4 +27,6 @@ private JobTitleService jobTitleService;
 	public List<JobTitle> getAll(){
 		return this.jobTitleService.getAll();
 	}
+	
+	
 }
