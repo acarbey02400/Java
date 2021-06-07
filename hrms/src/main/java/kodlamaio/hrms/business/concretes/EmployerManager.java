@@ -13,6 +13,7 @@ import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.CandidateDao;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
+import kodlamaio.hrms.dataAccess.abstracts.UserDao;
 import kodlamaio.hrms.entities.concretes.Candidate;
 import kodlamaio.hrms.entities.concretes.Employer;
 import kodlamaio.hrms.entities.concretes.User;
@@ -20,11 +21,13 @@ import kodlamaio.hrms.entities.concretes.User;
 public class EmployerManager implements EmployerService {
 
 	EmployerDao employerDao;
+	UserDao userDao;
 	EmployerVerificationCodeService employerVerificationCodeService;
 	
 	@Autowired
-	public EmployerManager(EmployerDao employerDao,EmployerVerificationCodeService employerVerificationCodeService) {
+	public EmployerManager(EmployerDao employerDao,EmployerVerificationCodeService employerVerificationCodeService,UserDao userDao) {
 		this.employerDao = employerDao;
+		this.userDao = userDao;
 		this.employerVerificationCodeService = employerVerificationCodeService;
 	}
 	
@@ -39,7 +42,7 @@ public class EmployerManager implements EmployerService {
 		boolean isFail = false;
 		
 		Result nullControl = nullControlForAdd(employer);
-		Result emailControl = emailControl(employer, this.employerDao);
+		Result emailControl = emailControl(employer, this.userDao);
 
 		results.add(nullControl);
 		results.add(emailControl);
@@ -82,8 +85,8 @@ public class EmployerManager implements EmployerService {
         }
         return new SuccessResult();
 	}
-	public Result emailControl(User user, EmployerDao employerDao) {
-		List<Employer> users = employerDao.findByEmail(user.getEmail()); 
+	public Result emailControl(User user, UserDao userDao) {
+		List<User> users = userDao.findByEmail(user.getEmail()); 
 		if(!(users.isEmpty()))
 		{
 			return new ErrorResult("This e-mail is already registered.");

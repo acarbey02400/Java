@@ -26,12 +26,14 @@ public class CandidateManager implements CandidateService{
 	private CandidateDao candidateDao;
 	private MernisServiceAdapter mernisServiceAdapter;
 	private CandidateVerificationCodeService candidateVerificationCodeService;
+	private UserDao userDao;
 	
 	@Autowired
-	public CandidateManager(CandidateDao candidateDao, MernisServiceAdapter mernisServiceAdapter, CandidateVerificationCodeService candidateVerificationCodeService) {
+	public CandidateManager(CandidateDao candidateDao, MernisServiceAdapter mernisServiceAdapter, CandidateVerificationCodeService candidateVerificationCodeService,UserDao userDao) {
 		this.candidateDao = candidateDao;
 		this.mernisServiceAdapter = mernisServiceAdapter;
 		this.candidateVerificationCodeService = candidateVerificationCodeService;
+		this.userDao=userDao;
 	}
 	
 	@Override
@@ -44,7 +46,7 @@ public class CandidateManager implements CandidateService{
 		List<Result> results = new ArrayList<Result>();
 		boolean isFail = false;
 		Result nullControl = nullControlForAdd(candidate);
-		Result emailControl = emailControl(candidate, this.candidateDao);
+		Result emailControl = emailControl(candidate, this.userDao);
 		Result identitynumberControl = identitynumberControl(candidate);
 		Result mernisVerify = verifyWithMernis(candidate);
 		results.add(nullControl);
@@ -107,8 +109,8 @@ public class CandidateManager implements CandidateService{
 		}
 		return new SuccessResult();
 	}
-	public Result emailControl(User user, CandidateDao candidateDao) {
-		List<Candidate> users = candidateDao.findByEmail(user.getEmail()); 
+	public Result emailControl(User user, UserDao userDao) {
+		List<User> users = userDao.findByEmail(user.getEmail()); 
 		if(!(users.isEmpty()))
 		{
 			return new ErrorResult("This e-mail is already registered.");

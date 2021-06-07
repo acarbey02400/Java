@@ -18,5 +18,20 @@ import kodlamaio.hrms.entities.concretes.SystemEmployee;
 @RequestMapping("/api/systemployee")
 public class SystemEmployeeController {
 	private SystemEmployeeService systemEmployeeService;
-	
+	 
+	 @Autowired
+	 public SystemEmployeeController(SystemEmployeeService systemEmployeeService) {
+	    super();
+	    this.systemEmployeeService= systemEmployeeService;
+	     }
+	 
+	     @GetMapping("/getall")
+	    public List<SystemEmployee> getAll() {
+	        return this.systemEmployeeService.getAll();
+	    }
+
+	    @PostMapping("/add")
+	    public Result add(@RequestBody SystemEmployee systemEmployee) {
+	        return this.systemEmployeeService.add(systemEmployee);
+	    }
 }
