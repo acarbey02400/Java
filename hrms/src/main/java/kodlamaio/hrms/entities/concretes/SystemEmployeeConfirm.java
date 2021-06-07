@@ -29,8 +29,8 @@ public class SystemEmployeeConfirm  {
 	@Column(name = "id")
 	private int id;
 	
-	@JoinColumn(name="employee_id", referencedColumnName = "id", nullable=false)
-	@Column(name = "employee_id")
+	@JoinColumn(name="systememployee_id", referencedColumnName = "id", nullable=false)
+	@Column(name = "systememployee_id")
 	private int employeeId;
 	
 	@Column(name = "is_confirmed")

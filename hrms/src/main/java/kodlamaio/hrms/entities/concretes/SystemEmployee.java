@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -16,7 +17,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper=false)
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "systememployees")
+@PrimaryKeyJoinColumn(name = "id")
+@Table(name = "systememployees") 
 public class SystemEmployee extends User {
 	
 	@Column(name = "first_name")

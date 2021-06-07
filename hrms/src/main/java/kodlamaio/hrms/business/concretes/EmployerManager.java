@@ -11,10 +11,13 @@ import kodlamaio.hrms.business.abstracts.EmployerVerificationCodeService;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
+import kodlamaio.hrms.dataAccess.abstracts.CandidateDao;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
+import kodlamaio.hrms.entities.concretes.Candidate;
 import kodlamaio.hrms.entities.concretes.Employer;
+import kodlamaio.hrms.entities.concretes.User;
 @Service
-public class EmployerManager extends UserManager implements EmployerService {
+public class EmployerManager implements EmployerService {
 
 	EmployerDao employerDao;
 	EmployerVerificationCodeService employerVerificationCodeService;
@@ -79,5 +82,12 @@ public class EmployerManager extends UserManager implements EmployerService {
         }
         return new SuccessResult();
 	}
-
+	public Result emailControl(User user, EmployerDao employerDao) {
+		List<Employer> users = employerDao.findByEmail(user.getEmail()); 
+		if(!(users.isEmpty()))
+		{
+			return new ErrorResult("This e-mail is already registered.");
+		}
+		return new SuccessResult();
+	}
 }

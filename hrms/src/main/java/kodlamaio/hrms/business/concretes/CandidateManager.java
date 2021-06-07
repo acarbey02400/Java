@@ -15,11 +15,13 @@ import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.core.utilities.senders.email.EmailSender;
 import kodlamaio.hrms.dataAccess.abstracts.CandidateDao;
+import kodlamaio.hrms.dataAccess.abstracts.UserDao;
 import kodlamaio.hrms.entities.concretes.Candidate;
 import kodlamaio.hrms.entities.concretes.CandidateVerificationCode;
+import kodlamaio.hrms.entities.concretes.User;
 
 @Service
-public class CandidateManager extends UserManager implements CandidateService{
+public class CandidateManager implements CandidateService{
 
 	private CandidateDao candidateDao;
 	private MernisServiceAdapter mernisServiceAdapter;
@@ -102,6 +104,14 @@ public class CandidateManager extends UserManager implements CandidateService{
 		if(!(users.isEmpty()))
 		{
 			return new ErrorResult("This identity number is already registered.");
+		}
+		return new SuccessResult();
+	}
+	public Result emailControl(User user, CandidateDao candidateDao) {
+		List<Candidate> users = candidateDao.findByEmail(user.getEmail()); 
+		if(!(users.isEmpty()))
+		{
+			return new ErrorResult("This e-mail is already registered.");
 		}
 		return new SuccessResult();
 	}

@@ -1,5 +1,6 @@
 package kodlamaio.hrms.business.concretes;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +43,18 @@ public class EmployerVerificationCodeManager implements EmployerVerificationCode
 		return verificationService.send(employer.getEmail(), code);
 	}
 	
-	public Result verify(String code) {
+	public Result verifyEmail(String code, int employerId) {
 		List<EmployerVerificationCode> codes = employerVerificationCodeDao.findByCode(code);
 		if(!codes.isEmpty())
 		{
-			return new SuccessResult("Account is verified.");			
+			for (EmployerVerificationCode employerVerificationCode : codes) {
+				if(employerVerificationCode.getEmployerId()==employerId) {
+					if(employerVerificationCode.isVerified()==true) return new ErrorResult("This account has already been verified.");
+					employerVerificationCode.setVerified(true);
+					employerVerificationCode.setVerificationDate(LocalDate.now());
+					return new SuccessResult("E-mail is verified.");		
+				}
+			}
 		}
 		return new ErrorResult("This verification code is invalid.");
 	}
