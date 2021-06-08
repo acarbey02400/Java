@@ -1,5 +1,6 @@
 package kodlamaio.hrms.business.concretes;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,19 @@ public class SystemEmployeeConfirmEmployerManager implements SystemEmployeeConfi
 	public SystemEmployeeConfirmEmployerManager(SystemEmployeeConfirmEmployerDao systemEmployeeConfirmEmployerDao) {
 		this.systemEmployeeConfirmEmployerDao= systemEmployeeConfirmEmployerDao;
 	}
+//	@Override
+//	public Result add(SystemEmployeeConfirmEmployer systemEmployeeConfirmEmployer) {
+//		 this.systemEmployeeConfirmEmployerDao.save(systemEmployeeConfirmEmployer); 
+//		 return new SuccessResult("System employee confirm employer added");
+//	}
+	
 	@Override
-	public Result employerConfirm(Employer employer,SystemEmployeeConfirmEmployer systemEmployeeConfirmEmployer) {
-		systemEmployeeConfirmEmployer.setEmployerId(employer.getId());
-		systemEmployeeConfirmEmployer.setConfirmDate(LocalDate.now());
+	public Result employerConfirm(SystemEmployeeConfirmEmployer systemEmployeeConfirmEmployer) {
+		
+		systemEmployeeConfirmEmployer.setConfirmDate(Date.valueOf(LocalDate.now()));
 		systemEmployeeConfirmEmployer.setConfirmed(true);
 		systemEmployeeConfirmEmployerDao.save(systemEmployeeConfirmEmployer);
 		
-		return new SuccessResult();
+		return new SuccessResult("Employer is confirmed.");
 	}
 }

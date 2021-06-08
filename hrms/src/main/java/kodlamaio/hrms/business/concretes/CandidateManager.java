@@ -49,11 +49,12 @@ public class CandidateManager implements CandidateService{
 		Result emailControl = emailControl(candidate, this.userDao);
 		Result identitynumberControl = identitynumberControl(candidate);
 		Result mernisVerify = verifyWithMernis(candidate);
+		Result passwordAgainControl= passwordAgainControl(candidate);
 		results.add(nullControl);
 		results.add(emailControl);
 		results.add(identitynumberControl);
 		results.add(mernisVerify);
-		
+		results.add(passwordAgainControl);
 		for (var result : results) {
 			if(!result.isSuccess())
 			{
@@ -116,5 +117,17 @@ public class CandidateManager implements CandidateService{
 			return new ErrorResult("This e-mail is already registered.");
 		}
 		return new SuccessResult();
+	}
+	
+	public Result passwordAgainControl(Candidate candidate) {
+		
+		
+		if(!(candidate.getPassword().intern() == candidate.getPasswordAgain().intern())) {
+			return new ErrorResult("passwords do not match");
+		}
+		else {
+			
+			return new SuccessResult();
+		}
 	}
 }

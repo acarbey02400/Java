@@ -33,10 +33,10 @@ SystemEmployeeDao systemEmployeeDao;
         List<Result> results = new ArrayList<Result>();
         boolean isFail = false;
         Result nullControl = nullControlForAdd(systemEmployee);
-        
+        Result passwordAgainControl= passwordAgainControl(systemEmployee);
         
         results.add(nullControl);
-        
+        results.add(passwordAgainControl);
         
         for (var result : results) {
             if(!result.isSuccess())
@@ -67,4 +67,12 @@ SystemEmployeeDao systemEmployeeDao;
         }
         return new SuccessResult();
     }
+    public Result passwordAgainControl(SystemEmployee systemEmployee) {
+		if(!(systemEmployee.getPassword().intern() == systemEmployee.getPasswordAgain().intern())) {
+			return new ErrorResult("passwords do not match");
+		}
+		else {
+			return new SuccessResult();
+		}
+	}
 }

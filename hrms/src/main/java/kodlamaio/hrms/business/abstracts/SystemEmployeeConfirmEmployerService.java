@@ -5,5 +5,6 @@ import kodlamaio.hrms.entities.concretes.Employer;
 import kodlamaio.hrms.entities.concretes.SystemEmployeeConfirmEmployer;
 
 public interface SystemEmployeeConfirmEmployerService {
-	Result employerConfirm(Employer employer,SystemEmployeeConfirmEmployer systemEmployeeConfirm);
+	Result employerConfirm(SystemEmployeeConfirmEmployer systemEmployeeConfirm);
+	//Result add(SystemEmployeeConfirmEmployer systemEmployeeConfirmEmployer);
 }

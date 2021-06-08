@@ -1,6 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,10 +44,12 @@ public class EmployerManager implements EmployerService {
 		
 		Result nullControl = nullControlForAdd(employer);
 		Result emailControl = emailControl(employer, this.userDao);
-
+		Result passwordAgainControl= passwordAgainControl(employer);
+		Result employerEmailControl = employerEmailControl(employer);
 		results.add(nullControl);
 		results.add(emailControl);
-		
+		results.add(passwordAgainControl);
+		results.add(employerEmailControl);
 		for (var result : results) {
 			if(!result.isSuccess())
 			{
@@ -92,5 +95,25 @@ public class EmployerManager implements EmployerService {
 			return new ErrorResult("This e-mail is already registered.");
 		}
 		return new SuccessResult();
+	}
+	public Result passwordAgainControl(Employer employer) {
+		if(!(employer.getPassword().intern() == employer.getPasswordAgain().intern())) {
+			return new ErrorResult("passwords do not match");
+		}
+		else {
+			return new SuccessResult();
+		}
+	}
+	
+	public Result employerEmailControl(Employer employer) {
+		
+		String[] emailSplit = employer.getEmail().split("@");
+		if (!employer.getWebAdress().contains(emailSplit[1])) {
+		return new ErrorResult("The e-mail address must be an extension of the web address. For example: name@YourDomainName.com");
+	}
+	else {
+		return new SuccessResult();
+	}
+	
 	}
 }
