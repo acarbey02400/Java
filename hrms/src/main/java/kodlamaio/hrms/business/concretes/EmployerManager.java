@@ -19,16 +19,16 @@ import kodlamaio.hrms.entities.concretes.Candidate;
 import kodlamaio.hrms.entities.concretes.Employer;
 import kodlamaio.hrms.entities.concretes.User;
 @Service
-public class EmployerManager implements EmployerService {
+public class EmployerManager extends UserManager implements EmployerService {
 
 	EmployerDao employerDao;
-	UserDao userDao;
+	
 	EmployerVerificationCodeService employerVerificationCodeService;
 	
 	@Autowired
 	public EmployerManager(EmployerDao employerDao,EmployerVerificationCodeService employerVerificationCodeService,UserDao userDao) {
+		super(userDao);
 		this.employerDao = employerDao;
-		this.userDao = userDao;
 		this.employerVerificationCodeService = employerVerificationCodeService;
 	}
 	
@@ -43,7 +43,7 @@ public class EmployerManager implements EmployerService {
 		boolean isFail = false;
 		
 		Result nullControl = nullControlForAdd(employer);
-		Result emailControl = emailControl(employer, this.userDao);
+		Result emailControl = emailControl(employer);
 		Result passwordAgainControl= passwordAgainControl(employer);
 		Result employerEmailControl = employerEmailControl(employer);
 		results.add(nullControl);
@@ -88,14 +88,8 @@ public class EmployerManager implements EmployerService {
         }
         return new SuccessResult();
 	}
-	public Result emailControl(User user, UserDao userDao) {
-		List<User> users = userDao.findByEmail(user.getEmail()); 
-		if(!(users.isEmpty()))
-		{
-			return new ErrorResult("This e-mail is already registered.");
-		}
-		return new SuccessResult();
-	}
+	
+	
 	public Result passwordAgainControl(Employer employer) {
 		if(!(employer.getPassword().intern() == employer.getPasswordAgain().intern())) {
 			return new ErrorResult("passwords do not match");

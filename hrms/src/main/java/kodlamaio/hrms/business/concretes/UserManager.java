@@ -12,10 +12,13 @@ import kodlamaio.hrms.entities.concretes.User;
 
 @Service
 public class UserManager implements UserService{
-
+	UserDao userDao;
+	public UserManager(UserDao userDao) {
+		this.userDao=userDao;
+	}
 	@Override
-	public Result emailControl(User user, UserDao userDao) {
-		List<User> users = userDao.findByEmail(user.getEmail()); 
+	public Result emailControl(User user) {
+		List<User> users = this.userDao.findByEmail(user.getEmail()); 
 		if(!(users.isEmpty()))
 		{
 			return new ErrorResult("This e-mail is already registered.");

@@ -5,5 +5,5 @@ import kodlamaio.hrms.dataAccess.abstracts.UserDao;
 import kodlamaio.hrms.entities.concretes.User;
 
 public interface UserService {
-	Result emailControl(User user, UserDao userDao);
+	Result emailControl(User user);
 }
