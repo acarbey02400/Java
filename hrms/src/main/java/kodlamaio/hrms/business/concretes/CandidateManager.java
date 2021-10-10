@@ -45,14 +45,14 @@ public class CandidateManager extends UserManager implements CandidateService{
 	}
 
 	@Override
-	public Result add(Candidate candidate) {
+	public Result add(Candidate candidate,String passwordAgain) {
 		List<Result> results = new ArrayList<Result>();
 		boolean isFail = false;
 		Result nullControl = nullControlForAdd(candidate);
 		Result emailControl = emailControl(candidate);
 		Result identitynumberControl = identitynumberControl(candidate);
 		Result mernisVerify = verifyWithMernis(candidate);
-		Result passwordAgainControl= passwordAgainControl(candidate);
+		Result passwordAgainControl= addControl(candidate,passwordAgain);
 		Result emailRegexControl = emailRegexControl(candidate);
 		results.add(nullControl);
 		results.add(emailRegexControl);
@@ -129,15 +129,5 @@ public class CandidateManager extends UserManager implements CandidateService{
 		return new SuccessResult();
 	}
 	
-	public Result passwordAgainControl(Candidate candidate) {
-		
-		
-		if(!(candidate.getPassword().intern() == candidate.getPasswordAgain().intern())) {
-			return new ErrorResult("passwords do not match");
-		}
-		else {
-			
-			return new SuccessResult();
-		}
-	}
+	
 }

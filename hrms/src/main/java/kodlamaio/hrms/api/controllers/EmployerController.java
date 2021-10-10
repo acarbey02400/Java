@@ -29,8 +29,8 @@ public class EmployerController {
 	}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody Employer employer) {
-		return this.employerService.add(employer);
+	public Result add(@RequestBody Employer employer,String passwordAgain) {
+		return this.employerService.add(employer,passwordAgain);
 	}
 	
 }

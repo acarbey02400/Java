@@ -35,6 +35,8 @@ private JobTitleDao jobTitleDao;
 	public Result add(JobTitle jobTitle) {
 		List<Result> results = new ArrayList<Result>();
 		Result jobTitleNameControl= jobTitleNameControl(jobTitle);
+		Result nullControlForAdd= nullControlForAdd(jobTitle);
+		results.add(nullControlForAdd);
 		results.add(jobTitleNameControl);
 		boolean isFail = false;
 		for (var result : results) {
@@ -47,6 +49,15 @@ private JobTitleDao jobTitleDao;
 		this.jobTitleDao.save(jobTitle);
 		return new SuccessResult("Job title added.");
 	}
+	
+	public Result nullControlForAdd(JobTitle jobTitle) {
+        if (jobTitle.getTitle() == "")
+        {
+            return new ErrorResult("Fill the all required fields.");
+        }
+        return new SuccessResult();
+	}
+	
 	public Result jobTitleNameControl(JobTitle jobTitle) {
 		List<JobTitle> titles = this.jobTitleDao.findByTitle(jobTitle.getTitle()); 
 		if(!(titles.isEmpty()))

@@ -31,7 +31,7 @@ public class SystemEmployeeController {
 	    }
 
 	    @PostMapping("/add")
-	    public Result add(@RequestBody SystemEmployee systemEmployee) {
-	        return this.systemEmployeeService.add(systemEmployee);
+	    public Result add(@RequestBody SystemEmployee systemEmployee,@RequestBody String passwordAgain) {
+	        return this.systemEmployeeService.add(systemEmployee,passwordAgain);
 	    }
 }

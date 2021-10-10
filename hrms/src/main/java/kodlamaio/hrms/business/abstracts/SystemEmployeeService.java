@@ -7,5 +7,5 @@ import kodlamaio.hrms.entities.concretes.SystemEmployee;
 
 public interface SystemEmployeeService {
 	List<SystemEmployee> getAll();
-	Result add(SystemEmployee systemEmployee);
+	Result add(SystemEmployee systemEmployee,String passwordAgain);
 }

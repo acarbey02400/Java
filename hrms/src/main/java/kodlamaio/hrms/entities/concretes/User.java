@@ -34,8 +34,8 @@ public class User {
 	@Column(name = "password")
 	private String password;
 	
-	@Column(name="password_again")
-	private String passwordAgain;
+	//@Column(name="password_again")
+	//private String passwordAgain;
 
 //	public User(String email, String password) {
 //		this.email = email;

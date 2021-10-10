@@ -38,13 +38,13 @@ public class EmployerManager extends UserManager implements EmployerService {
 	}
 
 	@Override
-	public Result add(Employer employer) {
+	public Result add(Employer employer,String passwordAgain) {
 		List<Result> results = new ArrayList<Result>();
 		boolean isFail = false;
 		
 		Result nullControl = nullControlForAdd(employer);
 		Result emailControl = emailControl(employer);
-		Result passwordAgainControl= passwordAgainControl(employer);
+		Result passwordAgainControl= addControl(employer,passwordAgain);
 		Result employerEmailControl = employerEmailControl(employer);
 		results.add(nullControl);
 		results.add(emailControl);
@@ -81,7 +81,7 @@ public class EmployerManager extends UserManager implements EmployerService {
                 || employer.getPhoneNumber() == ""
                 || employer.getEmail() == ""
                 || employer.getPassword() == ""
-                || employer.getPasswordAgain() == ""
+                
                 )
         {
             return new ErrorResult("Fill the all required fields.");
@@ -90,24 +90,17 @@ public class EmployerManager extends UserManager implements EmployerService {
 	}
 	
 	
-	public Result passwordAgainControl(Employer employer) {
-		if(!(employer.getPassword().intern() == employer.getPasswordAgain().intern())) {
-			return new ErrorResult("passwords do not match");
-		}
-		else {
-			return new SuccessResult();
-		}
-	}
+	
 	
 	public Result employerEmailControl(Employer employer) {
 		
 		String[] emailSplit = employer.getEmail().split("@");
 		if (!employer.getWebAdress().contains(emailSplit[1])) {
-		return new ErrorResult("The e-mail address must be an extension of the web address. For example: name@YourDomainName.com");
-	}
-	else {
-		return new SuccessResult();
-	}
+			return new ErrorResult("The e-mail address must be an extension of the web address. For example: name@YourDomainName.com");
+		}
+		else {
+			return new SuccessResult();
+		}
 	
 	}
 }
